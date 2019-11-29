@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/board.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>Document</title>
+    <script>
+            $( function() {
+              $( "#datepicker" ).datepicker({
+                  dateFormat: "yy-mm-dd" // 년 월 일이 하이픈(-)으로 연결되어야하기 때문에 
+              });
+            } );
+    </script>
+</head>
+<body>
+    <h1>수정</h1>
+    <hr />
+    <form method="post">
+    <table width="80%" border="1"> 
+        <tr>
+            <th>ID</th>
+            <td>
+                <input type="text" name="id" value="<%=data.id%>" disabled />
+            </td>
+        </tr>
+        <tr>
+            <th>TITLE</th>
+            <td >
+                <input type="text" name="title" value="<%=data.title%>" >
+            </td>
+        </tr>
+        <tr>
+            <th>CONTENT</th>
+            <td style="valign:top; width:80%;height:300px;">
+                <textarea name="content" cols="100" rows="10"><%=data.content%></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>DATE</th>
+            <td width="80%">
+                <input type="text" name="wdate" value="<%=data.wdate%>" id="datepicker"readonly>
+            </td>
+        </tr>
+    </table>
+    <p></p>
+    <input type="submit" value="수정"> 
+</form>
+</body>
+</html>

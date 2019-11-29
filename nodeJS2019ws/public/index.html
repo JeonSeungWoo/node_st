@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+    <style>
+        #output tr:hover{
+            cursor: pointer;
+            background-color: rgb(243, 238, 192);
+        }
+    </style>
+    <title>NODE.JS</title>
+    <script>
+       $(document).ready(function () {
+            // show data 
+            function selectData(){
+                //  remove #output
+                $("#output").empty();
+
+                $.ajax({
+                    url :  "/product/1",
+                    type : "put",
+                })
+                
+                //  play Ajax
+                $.getJSON('/products',  function(data){
+                    $(data).each(function(index,item){
+                        var output = '';
+                        output += '<tr>';
+                        output += '     <td>' + item.id + '</td>';
+                        output += '     <td>' + item.name + '</td>';
+                        output += '     <td>' + item.modelnumber + '</td>';
+                        output += '     <td>' + item.series + '</td>';
+                        output += '</tr>';
+                        $('#output').append(output);
+                    });
+                });
+              }
+
+              //    데이터 추가
+              selectData();
+              $("#insert_form").submit(function(event){
+                  event.preventDefault();// 전송방지
+
+                  var data = $(this).serialize();
+                  $.post('/products',data, selectData);
+              });
+              
+            //  한 행 선택
+            $("#output").on("click","tr",function(){
+                $(this).parent().
+            });
+
+            //  데이터 수정
+            $("#put").click(function(){
+                $.ajax({
+                    url: '/products/:id',
+                    type:'put',
+                    dataType: 'text',
+                    data: {
+                        name:$('#name').val(),
+                        modelnumber:$('#modelnumber').val(),
+                        series:$('#series').val()
+                    },success: function(data){
+                        $('#output').val(data);
+                    }
+                });
+            });
+
+            });
+    </script>
+</head>
+<body>
+    <h1>PRODUCTS</h1>
+
+    <form id="insert_form">
+    <table>
+        <tr>
+            <td><input type="text" name="name" placeholder="name" id="name"></td>
+        </tr>
+        <tr>
+            <td><input type="text" id="modelnumber" name="modelnumber" placeholder="modelnumber"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="series" id="series"></td>
+        </tr>
+        <tr>
+            <td> <input type="submit" value="추가"/></td>
+            <td> <input type="button" id="put" value="수정"/></td>
+            <td> <input type="button" id="delete" value="삭제"/></td>
+        </tr>
+       
+    </table>
+</form>
+<table id="output" border="1"></table>
+
+</body>
+</html>
